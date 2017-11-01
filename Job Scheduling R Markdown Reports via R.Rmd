@@ -1,0 +1,175 @@
+---
+title: "Job Scheduling R Markdown Reports via R"
+output: 
+  html_document: 
+    highlight: textmate
+    toc: yes
+    toc_float: 
+      collapsed: no
+    theme: cosmo
+---
+
+## Introduction
+
+Intro to Job Scheduling R Markdown Reports via R.
+
+R is a powerful programming language for statistical computing with many packages and tools.
+
+The goal of this article is to arm you with tools and techniques for job scheduling R Markdown reports via R.
+
+## Use Case
+
+Question: I have a R Markdown report that gathers new data and generates a report. I would rather this be automatic and then output a HTML report to a publishing platform or web server. How can I do this?
+
+## Scheduling
+
+You could create and write your own batch jobs or cron jobs to run your report automagically. Luckly, there are 2 packages that help people do this via R.
+
+http://www.bnosac.be/index.php/blog/64-scheduling-r-scripts-and-processes-on-windows-and-unix-linux
+
+For windows:
+
+https://github.com/bnosac/taskscheduleR
+
+https://cran.r-project.org/web/packages/taskscheduleR/index.html
+
+https://cran.r-project.org/web/packages/taskscheduleR/vignettes/taskscheduleR.html
+
+For Unix/Linux:
+
+https://github.com/bnosac/cronR
+
+https://cran.r-project.org/web/packages/cronR/index.html
+
+https://cran.r-project.org/web/packages/cronR/vignettes/cronR.html
+
+## Example Windows
+
+Install taskscheduleR from cran or github.
+
+1. Create a R script called Jobrun.R with the following text:
+
+```{r}
+#library(rmarkdown)
+#Sys.setenv(RSTUDIO_PANDOC="C:/Program Files/RStudio/bin/pandoc")
+#setwd("C:/Users/Phil/Documents")
+#rmarkdown::render("Stocks.Rmd", params = list(symbol='IBM'))
+```
+
+pandoc from RSudio Server was not recognized when running script via the Windows task scheduler... So I added Sys.setenv(RSTUDIO_PANDOC="C:/Program Files/RStudio/bin/pandoc") and it worked as above.
+
+https://stackoverflow.com/questions/35624025/pandoc-from-rsudio-server-not-recognized-when-running-script-via-cron
+
+https://stackoverflow.com/questions/28432607/pandoc-version-1-12-3-or-higher-is-required-and-was-not-found-r-shiny
+
+The 'rmarkdown' package will default to using a version of 'pandoc' discovered on the PATH, assuming it meets the pre-requisite version required. If you do not have 'pandoc' on the PATH, you can force RStudio to use your own custom pandoc by setting the environment variable. I did have pandoc and had to add the line for the job to run successfully.
+
+https://support.rstudio.com/hc/en-us/community/posts/239075008-pandoc
+
+If you want, you can put the file in the extdata folder within the package:
+
+R\win-library\3.2\taskscheduleR\extdata
+
+The log file is located at the directory where the R script is located.
+
+2. Create a R Markdown file by going to File -> New File -> R Markdown
+
+Please see Stocks.RMD in this repo as an example.
+
+Put this in the working directory specified above in step 1.
+
+3. Using taskscheduleR, run this code in the console or via the Shiny gadget
+*I had issues getting the gadget to work and found running the code directly via the console to work well.
+
+```{r}
+# library(taskscheduleR)
+
+# myscript <- system.file("extdata", "Jobrun.R", package = "taskscheduleR")
+
+## run script once within 40 seconds
+# taskscheduler_create(taskname = "myfancyscript", rscript = myscript, schedule = "ONCE", starttime = format(Sys.time() + 40, "%H:%M"))
+```
+
+This will run the Windows task scheduler once 40 secs after its run.
+
+You can see all jobs with:
+
+```{r}
+## get a data.frame of all tasks
+# tasks <- taskscheduler_ls()
+# str(tasks)
+```
+
+And you can delete them with 
+
+```{r}
+# taskscheduler_delete(taskname = "myfancyscript")
+```
+
+## Example Unix/Linux
+
+https://github.com/bnosac/cronR
+
+Make sure the cron daemon (https://en.wikipedia.org/wiki/Cron) is running. On Debian this is done as follows.
+
+sudo apt-get update
+sudo apt-get install -y cron
+sudo cron start
+
+Install cronR from cran or github.
+*To be updated for RMD soon.
+*I had issues getting the gadget to work and found running the code directly via the console to work well.
+
+1. Run this code in the console...
+
+https://cran.r-project.org/web/packages/cronR/cronR.pdf
+
+```{r}
+# library(cronR)
+# f <- system.file(package = "cronR", "extdata", "helloworld.R")
+# cmd <- cron_rscript(f)
+# cron_add(command = cmd, frequency = 'minutely', id = 'test1', description = 'My process 1')
+# cron_njobs()
+# cron_ls()
+# cron_rm(id = "test1")
+# cron_njobs()
+# cron_ls()
+```
+
+This will create a cron job to run helloworld.R in the extdata folder.
+
+2. Run this code to check log after run:
+
+https://github.com/bnosac/cronR/blob/master/vignettes/cronR.Rmd
+
+
+```{r}
+## log file is at the place where the helloworld.R script was located
+# system.file("extdata", "helloworld.log", package = "cronR")
+```
+
+This will run the addin:
+
+https://rdrr.io/cran/cronR/man/cron_rstudioaddin.html
+
+```{r}
+# cron_rstudioaddin(RscriptRepository)
+```
+
+## Interesting
+
+http://code.markedmondson.me/4-ways-schedule-r-scripts-on-google-cloud-platform/
+
+## Other
+
+https://stackoverflow.com/questions/41819899/scheduled-job-on-cronr-not-running-log-reads-bin-sh-rscript-command-not-fou
+
+https://github.com/rstudio/rmarkdown/issues/620
+
+http://rstudio-pubs-static.s3.amazonaws.com/3269_a6682dfda37e411fb5e0e6699495cdc4.html
+
+https://cran.r-project.org/web/packages/taskscheduleR/README.html
+
+Mark on administrator rights
+
+By default, to schedule a task, you must be a member of the Administrators, Backup Operators, or Server Operators group on the local computer. If you are not, you can ask your System administrator to make sure you have the rights to execute Schtasks.exe. This is the application this R package connects to. Schtasks.exe enables an administrator to create, delete, query, change, run and end scheduled tasks on a local or remote computer. If you are using RStudio, you might need to start RStudio as admin, on Windows this is rightclick >> run as administrator.
