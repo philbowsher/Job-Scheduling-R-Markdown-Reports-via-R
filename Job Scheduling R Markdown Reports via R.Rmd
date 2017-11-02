@@ -124,6 +124,35 @@ COUNT(*) AS "total"
 FROM ("bank") 
 GROUP BY "month_idx", "year", "month"
 
+## Generating multiple versions of the R Markdown Report
+
+Above, the function:
+
+rmarkdown::render("Stocks.Rmd", params = list(symbol='IBM'))
+
+Will generate one output file (html)...
+
+What if we wanted multiple reports based on a list of parameters? Report1, Report2, Report3 etc.?
+
+First, lets make a vector of stock symbols:
+
+```{r}
+# stocks <- c('IBM', 'GOOG', 'TESLA')
+```
+
+Now lets use the purr package map() function to loop through our vector and pass in our stock symbols for 3 reports:
+
+```{r}
+# purr::map(stocks, ~rmarkdown::render("Stocks.Rmd", params = list(stocks = .x)))
+```
+
+http://purrr.tidyverse.org
+https://github.com/tidyverse/purrr
+https://cran.r-project.org/web/packages/purrr/index.html
+
+https://www.rstudio.com/resources/webinars/the-tidyverse-and-rstudio-connect/
+
+You can learn more at time 22:49.
 
 2. Create a R Markdown file by going to File -> New File -> R Markdown
 

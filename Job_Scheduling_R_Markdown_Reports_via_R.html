@@ -297,6 +297,20 @@ div.tocify {
 <p>You could also connect to the database via R Markdown</p>
 <p><a href="https://rviews.rstudio.com/2017/10/18/database-queries-with-r/" class="uri">https://rviews.rstudio.com/2017/10/18/database-queries-with-r/</a></p>
 <p>{sql, connection=con, output.var = “mydataframe”} SELECT “month_idx”, “year”, “month”, SUM(CASE WHEN (“term_deposit” = ‘yes’) THEN (1.0) ELSE (0.0) END) AS “subscribe”, COUNT(*) AS “total” FROM (“bank”) GROUP BY “month_idx”, “year”, “month”</p>
+</div>
+<div id="generating-multiple-versions-of-the-r-markdown-report" class="section level2">
+<h2>Generating multiple versions of the R Markdown Report</h2>
+<p>Above, the function:</p>
+<p>rmarkdown::render(“Stocks.Rmd”, params = list(symbol=‘IBM’))</p>
+<p>Will generate one output file (html)…</p>
+<p>What if we wanted multiple reports based on a list of parameters? Report1, Report2, Report3 etc.?</p>
+<p>First, lets make a vector of stock symbols:</p>
+<pre class="r"><code># stocks &lt;- c('IBM', 'GOOG', 'TESLA')</code></pre>
+<p>Now lets use the purr package map() function to loop through our vector and pass in our stock symbols for 3 reports:</p>
+<pre class="r"><code># purr::map(stocks, ~rmarkdown::render(&quot;Stocks.Rmd&quot;, params = list(stocks = .x)))</code></pre>
+<p><a href="http://purrr.tidyverse.org" class="uri">http://purrr.tidyverse.org</a> <a href="https://github.com/tidyverse/purrr" class="uri">https://github.com/tidyverse/purrr</a> <a href="https://cran.r-project.org/web/packages/purrr/index.html" class="uri">https://cran.r-project.org/web/packages/purrr/index.html</a></p>
+<p><a href="https://www.rstudio.com/resources/webinars/the-tidyverse-and-rstudio-connect/" class="uri">https://www.rstudio.com/resources/webinars/the-tidyverse-and-rstudio-connect/</a></p>
+<p>You can learn more at time 22:49.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Create a R Markdown file by going to File -&gt; New File -&gt; R Markdown</li>
 </ol>
