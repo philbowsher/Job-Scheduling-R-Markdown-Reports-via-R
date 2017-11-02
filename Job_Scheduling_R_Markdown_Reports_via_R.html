@@ -265,6 +265,38 @@ div.tocify {
 <p>If you want, you can put the file in the extdata folder within the package:</p>
 <p>R-library.2</p>
 <p>The log file is located at the directory where the R script is located.</p>
+</div>
+<div id="rendering-output" class="section level2">
+<h2>Rendering Output</h2>
+<p>The job will run a r script that runs the R Markdown report by calling the rmarkdown::render function</p>
+<p><a href="http://rmarkdown.rstudio.com/authoring_quick_tour.html#rendering_output" class="uri">http://rmarkdown.rstudio.com/authoring_quick_tour.html#rendering_output</a></p>
+<p><a href="https://www.rdocumentation.org/packages/rmarkdown/versions/1.6/topics/render" class="uri">https://www.rdocumentation.org/packages/rmarkdown/versions/1.6/topics/render</a></p>
+</div>
+<div id="parameterized-reports" class="section level2">
+<h2>Parameterized Reports</h2>
+<p>Please note the R Markdown report is Parameterized. This means the YAML Params Field has “IBM”… you could change this to “GOOG” and the same code will generate a new report.</p>
+<p><a href="http://rmarkdown.rstudio.com/developer_parameterized_reports.html" class="uri">http://rmarkdown.rstudio.com/developer_parameterized_reports.html</a></p>
+<p><a href="https://itsalocke.com/blog/r-quick-tip-parameter-re-use-within-rmarkdown-yaml/" class="uri">https://itsalocke.com/blog/r-quick-tip-parameter-re-use-within-rmarkdown-yaml/</a></p>
+</div>
+<div id="output-formats" class="section level2">
+<h2>Output Formats</h2>
+<p>Please note the R Markdown report is HTML. You could change this to PDF or Word if you like in YAML header.</p>
+<p><a href="http://rmarkdown.rstudio.com/lesson-9.html" class="uri">http://rmarkdown.rstudio.com/lesson-9.html</a></p>
+</div>
+<div id="knitr-language-engines" class="section level2">
+<h2>knitr Language Engines</h2>
+<p>Please note if you wanted, you could have your R Markdown file call out to another language when the job runs:</p>
+<p>Python, Awk, Ruby, Haskell, Bash, Perl, Graphviz, TikZ, SAS, Scala, and CoffeeScript, etc</p>
+<p><a href="http://rmarkdown.rstudio.com/authoring_knitr_engines.html" class="uri">http://rmarkdown.rstudio.com/authoring_knitr_engines.html</a></p>
+<p><a href="http://rmarkdown.rstudio.com/authoring_knitr_engines.html" class="uri">http://rmarkdown.rstudio.com/authoring_knitr_engines.html</a></p>
+<p><a href="https://yihui.name/knitr/demo/engines/" class="uri">https://yihui.name/knitr/demo/engines/</a></p>
+<p><a href="https://github.com/rstudio/seamonster/tree/master/end-to-end-twitter-etl" class="uri">https://github.com/rstudio/seamonster/tree/master/end-to-end-twitter-etl</a></p>
+<p>Feather can be used to read and write data frames between R and python.</p>
+<p><a href="https://github.com/rstudio/seamonster/tree/master/rmarkdown/bash-python-feather" class="uri">https://github.com/rstudio/seamonster/tree/master/rmarkdown/bash-python-feather</a></p>
+<p><a href="https://cran.r-project.org/web/packages/feather/index.html" class="uri">https://cran.r-project.org/web/packages/feather/index.html</a></p>
+<p>You could also connect to the database via R Markdown</p>
+<p><a href="https://rviews.rstudio.com/2017/10/18/database-queries-with-r/" class="uri">https://rviews.rstudio.com/2017/10/18/database-queries-with-r/</a></p>
+<p>{sql, connection=con, output.var = “mydataframe”} SELECT “month_idx”, “year”, “month”, SUM(CASE WHEN (“term_deposit” = ‘yes’) THEN (1.0) ELSE (0.0) END) AS “subscribe”, COUNT(*) AS “total” FROM (“bank”) GROUP BY “month_idx”, “year”, “month”</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Create a R Markdown file by going to File -&gt; New File -&gt; R Markdown</li>
 </ol>
@@ -329,6 +361,9 @@ div.tocify {
 <p><a href="https://cran.r-project.org/web/packages/taskscheduleR/README.html" class="uri">https://cran.r-project.org/web/packages/taskscheduleR/README.html</a></p>
 <p>Mark on administrator rights</p>
 <p>By default, to schedule a task, you must be a member of the Administrators, Backup Operators, or Server Operators group on the local computer. If you are not, you can ask your System administrator to make sure you have the rights to execute Schtasks.exe. This is the application this R package connects to. Schtasks.exe enables an administrator to create, delete, query, change, run and end scheduled tasks on a local or remote computer. If you are using RStudio, you might need to start RStudio as admin, on Windows this is rightclick &gt;&gt; run as administrator.</p>
+<p><a href="https://github.com/rstudio/rmarkdown/issues/319" class="uri">https://github.com/rstudio/rmarkdown/issues/319</a> <a href="https://github.com/yihui/knitr/blob/master/inst/bin/knit" class="uri">https://github.com/yihui/knitr/blob/master/inst/bin/knit</a></p>
+<p><a href="https://support.rstudio.com/hc/en-us/community/posts/222207188-Multiple-Python-chunks-in-RStudio-R-Markdown" class="uri">https://support.rstudio.com/hc/en-us/community/posts/222207188-Multiple-Python-chunks-in-RStudio-R-Markdown</a></p>
+<p><a href="https://stackoverflow.com/questions/40512587/rstudio-notebook-rmarkdown-running-python-describe-not-shown" class="uri">https://stackoverflow.com/questions/40512587/rstudio-notebook-rmarkdown-running-python-describe-not-shown</a></p>
 </div>
 
 
